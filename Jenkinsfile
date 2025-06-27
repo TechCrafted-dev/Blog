@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         APP_NAME = 'techcrafted'
-        PORT     = '6543'
+        PORT     = '5432'
         TAG      = "${APP_NAME}:latest"
     }
 

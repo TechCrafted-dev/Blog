@@ -1,7 +1,7 @@
 #!/bin/bash
 
 APP_NAME="blog.techcrafted"
-PORT=6543
+PORT=5432
 
 echo "Deteniendo contenedor existente..."
 docker stop $APP_NAME 2>/dev/null && docker rm $APP_NAME 2>/dev/null
