@@ -1,16 +1,84 @@
 ---
+import Layout from '@/layouts/Layout.astro';
+
+let repos = [];
+try {
+    const response = await fetch('http://localhost:3000/get_repos');
+    repos = await response.json();
+} catch (error) {
+    console.error('No se pudo conectar al servidor:', error);
+}
+
+// Simulación de entradas de blog para prueba
+const posts = [
+    {
+        title: "Primera Entrada",
+        content: "Esta es la primera entrada del blog. Puedes mostrar aquí el contenido de tu primera publicación.",
+        image: "/placeholder.svg"
+    },
+    {
+        title: "Segunda Entrada",
+        content: "Contenido de ejemplo para la segunda entrada del blog.",
+        image: "/placeholder.svg"
+    },
+    {
+        title: "Tercera Entrada",
+        content: "Contenido de ejemplo para la tercera entrada del blog.",
+        image: "/placeholder.svg"
+    },
+    {
+        title: "Cuarta Entrada",
+        content: "Contenido de ejemplo para la cuarta entrada del blog.",
+        image: "/placeholder.svg"
+    }
+];
 
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+    <main class="mx-auto w-[60rem] pt-16">
+        <div class="p-8">
+            <div class="flex flex-col gap-12">
+                <!-- Artículo Principal / Último -->
+                <section class="text-neutral-900 dark:text-neutral-100">
+                    <h2 class="text-2xl font-bold mb-4">Última Publicación</h2>
+                    <article class="bg-white dark:bg-neutral-800/60 p-6 rounded-lg shadow-sm backdrop-blur-sm border border-neutral-200/10 dark:border-neutral-700/30">
+                        <div class="mb-4">
+                            <img 
+                                src="/placeholder.svg" 
+                                alt="Imagen del artículo destacado" 
+                                class="w-full h-72 object-cover rounded-md"
+                            />
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3">Entrada de Prueba</h3>
+                        <p class="text-neutral-700 dark:text-neutral-300">
+                            Este es el artículo principal destacado del blog. Aquí puedes incluir una descripción más detallada del proyecto, tecnologías utilizadas y cualquier otra información relevante que quieras compartir con tus lectores.
+                        </p>
+                    </article>
+                </section>
+
+                <!-- Grid de Entradas Anteriores -->
+                <section class="text-neutral-900 dark:text-neutral-100">
+                    <h2 class="text-2xl font-bold mb-6">Entradas Anteriores</h2>
+                    <div class="grid grid-cols-2 gap-6">
+                        {posts.map((post) => (
+                            <article class="bg-white dark:bg-neutral-800/60 p-4 rounded-lg shadow-sm backdrop-blur-sm border border-neutral-200/10 dark:border-neutral-700/30 transition-colors duration-200 hover:dark:bg-neutral-800/80">
+                                <div class="mb-3">
+                                    <img 
+                                        src={post.image}
+                                        alt={`Imagen de ${post.title}`}
+                                        class="w-full h-40 object-cover rounded-md"
+                                    />
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">{post.title}</h3>
+                                <p class="text-neutral-600 dark:text-neutral-300">
+                                    {post.content}
+                                </p>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</Layout>

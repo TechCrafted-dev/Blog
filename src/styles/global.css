@@ -1,19 +1,24 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-html,
-body {
-    background: #111;
-    height: 200vh;
-    overflow-x: hidden;
-    overscroll-behavior: none;
-    color: white;
-    margin: 0;
-    width: 100%;
+:root {
+  --gray: 96, 115, 159;
+  --gray-dark: 34, 41, 57;
+  --gray-gradient: #f8f9fa, #e9ecef;
 }
 
-@theme {
-    --radius-5xl: 3rem;
-    --radius-6xl: 4rem;
-    --radius-7xl: 5rem;
+/* Estilos base para el layout */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+footer {
+  margin-top: auto;
 }
