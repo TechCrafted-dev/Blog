@@ -1,84 +1,87 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import RepoCard from '@/components/RepoCard.astro';
+import FeaturedRepo from '@/components/FeaturedRepo.astro';
 
 let repos = [];
 try {
-    const response = await fetch('http://localhost:3000/get_repos');
-    repos = await response.json();
-} catch (error) {
-    console.error('No se pudo conectar al servidor:', error);
+    const res = await fetch('http://localhost:3000/repos');
+    repos = await res.json();
+} catch (err) {
+    console.error('No se pudo conectar al servidor:', err);
 }
 
-// Simulación de entradas de blog para prueba
-const posts = [
-    {
-        title: "Primera Entrada",
-        content: "Esta es la primera entrada del blog. Puedes mostrar aquí el contenido de tu primera publicación.",
-        image: "/placeholder.svg"
-    },
-    {
-        title: "Segunda Entrada",
-        content: "Contenido de ejemplo para la segunda entrada del blog.",
-        image: "/placeholder.svg"
-    },
-    {
-        title: "Tercera Entrada",
-        content: "Contenido de ejemplo para la tercera entrada del blog.",
-        image: "/placeholder.svg"
-    },
-    {
-        title: "Cuarta Entrada",
-        content: "Contenido de ejemplo para la cuarta entrada del blog.",
-        image: "/placeholder.svg"
-    }
-];
+const latestPost = repos.length > 0 
+    ? repos.reduce((a, b) => new Date(a.create_at) > new Date(b.create_at) ? a : b)
+    : null;
 
+const remainingPosts = repos
+    .filter(repo => repo.id !== latestPost?.id)
+    .reverse();
 ---
 
-<Layout>
-    <main class="mx-auto w-[60rem] pt-16">
-        <div class="p-8">
+<Layout repos={repos}>
+    <main class="mx-auto w-[60rem]">
+        <div class="pt-20 pr-8">
             <div class="flex flex-col gap-12">
-                <!-- Artículo Principal / Último -->
+                <!-- Artículo Principal -->
                 <section class="text-neutral-900 dark:text-neutral-100">
                     <h2 class="text-2xl font-bold mb-4">Última Publicación</h2>
-                    <article class="bg-white dark:bg-neutral-800/60 p-6 rounded-lg shadow-sm backdrop-blur-sm border border-neutral-200/10 dark:border-neutral-700/30">
-                        <div class="mb-4">
-                            <img 
-                                src="/placeholder.svg" 
-                                alt="Imagen del artículo destacado" 
-                                class="w-full h-72 object-cover rounded-md"
-                            />
-                        </div>
-                        <h3 class="text-2xl font-semibold mb-3">Entrada de Prueba</h3>
-                        <p class="text-neutral-700 dark:text-neutral-300">
-                            Este es el artículo principal destacado del blog. Aquí puedes incluir una descripción más detallada del proyecto, tecnologías utilizadas y cualquier otra información relevante que quieras compartir con tus lectores.
-                        </p>
-                    </article>
+                    {latestPost && <FeaturedRepo {...latestPost} />}
                 </section>
 
-                <!-- Grid de Entradas Anteriores -->
+                <!-- Entradas Anteriores -->
                 <section class="text-neutral-900 dark:text-neutral-100">
                     <h2 class="text-2xl font-bold mb-6">Entradas Anteriores</h2>
-                    <div class="grid grid-cols-2 gap-6">
-                        {posts.map((post) => (
-                            <article class="bg-white dark:bg-neutral-800/60 p-4 rounded-lg shadow-sm backdrop-blur-sm border border-neutral-200/10 dark:border-neutral-700/30 transition-colors duration-200 hover:dark:bg-neutral-800/80">
-                                <div class="mb-3">
-                                    <img 
-                                        src={post.image}
-                                        alt={`Imagen de ${post.title}`}
-                                        class="w-full h-40 object-cover rounded-md"
-                                    />
-                                </div>
-                                <h3 class="text-xl font-semibold mb-2">{post.title}</h3>
-                                <p class="text-neutral-600 dark:text-neutral-300">
-                                    {post.content}
-                                </p>
-                            </article>
-                        ))}
+                    <div id="posts-grid" class="grid grid-cols-2 gap-6">
+                        {remainingPosts
+                            .slice(0, 4)
+                            .map(repo => <RepoCard {...repo} />)}
                     </div>
+                    {remainingPosts.length > 4 && (
+                        <div class="flex justify-center mt-8">
+                            <button
+                                id="load-more"
+                                class="px-6 py-2 bg-neutral-800 text-white rounded-md hover:bg-neutral-700 transition-colors duration-200"
+                                data-current-page="1"
+                                data-total-posts={JSON.stringify(remainingPosts)}
+                            >
+                                Cargar más
+                            </button>
+                        </div>
+                    )}
                 </section>
             </div>
         </div>
     </main>
 </Layout>
+
+<script>
+    import { createRepoCard } from '@/scripts/RepoCardTemplate';  // Corregir la importación
+
+    const loadMoreBtn = document.getElementById('load-more');
+    const postsGrid = document.getElementById('posts-grid');
+    const POSTS_PER_PAGE = 4;
+
+    const allPosts = JSON.parse(loadMoreBtn?.dataset.totalPosts || '[]');
+
+    function loadMorePosts() {
+        const currentPage = parseInt(loadMoreBtn.dataset.currentPage);
+        const startIndex = currentPage * POSTS_PER_PAGE;
+        const endIndex = startIndex + POSTS_PER_PAGE;
+
+        const newPosts = allPosts.slice(startIndex, endIndex);
+
+        if (newPosts.length > 0) {
+            const postsHTML = newPosts.map(createRepoCard).join('');
+            postsGrid.insertAdjacentHTML('beforeend', postsHTML);
+            loadMoreBtn.dataset.currentPage = (currentPage + 1).toString();
+
+            if (endIndex >= allPosts.length) {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+    }
+
+    loadMoreBtn?.addEventListener('click', loadMorePosts);
+</script>

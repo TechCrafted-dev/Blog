@@ -6,6 +6,8 @@ import ThemeToggle from '@/components/ThemeToggle.astro';
 import Footer from '@/components/Footer.astro';
 import Header from "@/components/Header.astro";
 import Aside from "@/components/Aside.astro";
+
+const { repos = [] } = Astro.props;
 ---
 
 <!doctype html>
@@ -52,7 +54,7 @@ import Aside from "@/components/Aside.astro";
 			<main class="min-h-screen pr-[40rem] p-4">
 				<slot />
 			</main>
-			<Aside />
+			<Aside repos={repos} />
 		</div>
 		<Footer />
 	</body>

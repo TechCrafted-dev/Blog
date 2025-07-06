@@ -1,0 +1,15 @@
+---
+import { createRepoCard } from '@/scripts/RepoCardTemplate.ts';
+
+interface Props {
+    name: string;
+    description: string;
+    created_at: string;
+    language: string;
+    id: string;
+}
+
+const props = Astro.props;
+---
+
+<Fragment set:html={createRepoCard(props)} />
