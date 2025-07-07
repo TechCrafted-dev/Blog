@@ -1,9 +1,48 @@
 ---
+import LogoTechCrafted from '@/assets/logo.webp';
+
 const today = new Date();
 ---
 
-<footer>
-	<div class="text-center text-sm text-neutral-500 dark:text-neutral-400 py-4">
-		TechCrafted.dev &copy; {today.getFullYear()} Sergio Trujillo de la Nuez. All rights reserved.
+<footer class="z-10 bg-neutral-100">
+	<!-- Wrapper -->
+	<div class="max-w-7xl mx-auto px-4 py-6
+				flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+
+		<div class="flex-shrink-0">
+			<h1 class="text-2xl font-bold pb-3">TechCrafted.dev</h1>
+			<strong class="text-sm text-neutral-600 dark:text-neutral-400 mt-2">
+				Un espacio dedicado a la tecnología, el desarrollo <br>
+				y grandes ideas que merecen compartirse.
+			</strong>
+			<div class="flex items-center gap-6 pt-4 bg-black-800 text-black dark:text-white">
+				<a href="https://x.com/TRuHa83" target="_blank" aria-label="X (Twitter)"><i class="fab fa-x-twitter fa-lg  hover:text-blue-500"></i></a>
+				<a href="https://github.com/TRuHa83" target="_blank" aria-label="GitHub"><i class="fab fa-github fa-lg  hover:text-blue-500"></i></a>
+				<a href="https://www.linkedin.com/in/sergio-trujillo-de-la-nuez-32a4a727/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin fa-lg  hover:text-blue-500"></i></a>
+				</div>
+			</div>
+		<div>
+			<h3>Información</h3>
+			<ul class="text-sm text-neutral-600 dark:text-neutral-400">
+				<li class="pt-2"><a href="/about" class="hover:text-blue-500">techcrafted.dev</a></li>
+				<li class="pt-2"><a href="/contact" class="hover:text-blue-500">Portafolio</a></li>
+				<li class="pt-2"><a href="/privacy-policy" class="hover:text-blue-500">Noticias</a></li>
+			</ul>
+		</div>
+		<div class="w-50">
+			<h3 class="pb-2">Suscríbete</h3>
+			<input type="email" placeholder="Tu correo electrónico"
+				class="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded-md text-sm text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+				aria-label="Suscríbete a nuestro boletín" />
+			<button class="mt-2 w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
+				Enviar
+			</button>
+		</div>
+	</div>
+
+	<div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between border-t border-neutral-200 dark:border-neutral-700">
+		<div class="w-full text-center text-sm text-neutral-500 dark:text-neutral-400 py-4">
+		  TechCrafted.dev &copy; {today.getFullYear()} Sergio Trujillo de la Nuez. All rights reserved.
+		</div>
 	</div>
 </footer>
