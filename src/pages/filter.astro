@@ -1,0 +1,44 @@
+---
+import Layout   from '@/layouts/Layout.astro';
+import RepoCard from '@/components/RepoCard.astro';
+import { getRepos } from '@/scripts/getRepos';
+
+const repos = await getRepos();
+
+export const prerender = true;
+---
+
+<Layout>
+  <main class="mx-auto w-[60rem]">
+      <div class="flex flex-col pt-20 pr-8 gap-12">
+          <section class="text-neutral-900 dark:text-neutral-100">
+              <h2 class="text-2xl font-bold mb-6">Entradas Filtradas</h2>
+              <div id="posts-grid" class="grid md:grid-cols-2 gap-6">
+                  {repos.map((repo) => (
+                          <div data-lang={repo.language || 'Unknown'}>
+                              <RepoCard {...repo} />
+                          </div>
+                  ))}
+              </div>
+          </section>
+      </div>
+  </main>
+
+  <script is:inline type="module">
+    // Esperamos a que el DOM esté listo
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const cat    = params.get('cat');               // p.ej. "Rust"
+        console.log(cat);
+      if (!cat) return;                               // sin filtro → todo visible
+
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        const lang = el.dataset.lang;
+        const match =
+          lang === cat ||
+          (cat === 'Documentación' && lang === 'Unknown');
+        el.hidden = !match;                           // show / hide
+      });
+    });
+  </script>
+</Layout>

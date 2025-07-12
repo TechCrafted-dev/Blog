@@ -1,26 +1,18 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import RepoCard from '@/components/RepoCard.astro';
-import FeaturedRepo from '@/components/FeaturedRepo.astro';
+import Layout        from '@/layouts/Layout.astro';
+import RepoCard       from '@/components/RepoCard.astro';
+import FeaturedRepo   from '@/components/FeaturedRepo.astro';
 
-let repos = [];
-try {
-    const res = await fetch('http://localhost:3000/repos');
-    repos = await res.json();
-} catch (err) {
-    console.error('No se pudo conectar al servidor:', err);
-}
+import { getRepos } from '@/scripts/getRepos';
 
-const latestPost = repos.length > 0 
-    ? repos.reduce((a, b) => new Date(a.create_at) > new Date(b.create_at) ? a : b)
-    : null;
+const repos      = await getRepos();
+const latestPost = repos.at(-1);
+const remainingPosts  = repos.slice(0, -1).reverse();
 
-const remainingPosts = repos
-    .filter(repo => repo.id !== latestPost?.id)
-    .reverse();
+export const prerender = true;
 ---
 
-<Layout repos={repos}>
+<Layout>
     <main class="mx-auto w-[60rem]">
         <div class="pt-20 pr-8">
             <div class="flex flex-col gap-12">
@@ -57,7 +49,7 @@ const remainingPosts = repos
 </Layout>
 
 <script>
-    import { createRepoCard } from '@/scripts/RepoCardTemplate';  // Corregir la importación
+    import { createRepoCard } from '@/scripts/RepoCardTemplate';
 
     const loadMoreBtn = document.getElementById('load-more');
     const postsGrid = document.getElementById('posts-grid');

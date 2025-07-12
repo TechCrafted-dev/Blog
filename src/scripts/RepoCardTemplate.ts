@@ -9,9 +9,10 @@ interface Repo {
 
 export function createRepoCard(repo: Repo): string {
     return `
+        <a href="/post/${repo.id || repo.name}" class="group">
         <article class="flex flex-col h-full bg-white dark:bg-neutral-800/60 p-4 rounded-lg shadow-sm backdrop-blur-sm
                         border border-neutral-500/10 hover:shadow-lg dark:border-neutral-700/30 transition duration-200
-                        hover:dark:bg-neutral-800/80 group">
+                        hover:dark:bg-neutral-800/80">
             <div class="mb-3">
                 <img src="/placeholder.svg" alt="Imagen de ${repo.name}" class="w-full h-40 object-cover rounded-md"/>
             </div>
@@ -39,9 +40,10 @@ export function createRepoCard(repo: Repo): string {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l4-14" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 18l6-6-6-6" />
                     </svg>
-                    ${repo.language}
+                    ${repo.language === 'Unknown' || !repo.language ? 'Documentación' : repo.language}
                 </span>
             </div>
         </article>
+        </a>
     `;
 }

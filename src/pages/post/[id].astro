@@ -1,0 +1,60 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+import { getPosts } from '@/scripts/getPosts';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { id: post.id.toString() },
+    props:  { post },
+  }));
+}
+
+const { post }  = Astro.props;
+const htmlContent      = marked.parse(post.article);
+
+export const prerender = true;
+---
+
+<Layout>
+    <main class="mx-auto w-[60rem]">
+        <div class="pt-20 pr-8">
+            <article class="flex flex-col items-start w-full mx-auto bg-white dark:bg-neutral-800/60">
+                <span class="flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    {new Date(post.created_at).toLocaleDateString(
+                        'es-ES',
+                        { year: 'numeric', month: 'short', day: '2-digit' }
+                    )}
+                  </span>
+
+            <hr class="border-neutral-200 dark:border-neutral-700 my-0" />
+            <div class="content text-neutral-700 dark:text-neutral-300 space-y-4 leading-relaxed
+                     [&>h1]:text-3xl [&>h1]:font-bold [&>h1]:mt-6 [&>h1]:mb-4
+                     [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:mt-8 [&>h2]:mb-4
+                     [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:mt-6 [&>h3]:mb-3
+                     [&>p]:mb-4
+                     [&>b]:font-semibold
+                     [&>strong]:font-semibold
+                     [&>ul]:list-disc [&>ul]:ml-6 [&>ul]:mb-4
+                     [&>ol]:list-decimal [&>ol]:ml-6 [&>ol]:mb-4
+                     [&>blockquote]:border-l-4 [&>blockquote]:border-neutral-300 [&>blockquote]:pl-4 [&>blockquote]:italic
+                     [&>code]:bg-neutral-100 [&>code]:dark:bg-neutral-800 [&>code]:rounded [&>code]:px-1
+                     [&>pre]:bg-neutral-100 [&>pre]:dark:bg-neutral-800 [&>pre]:p-4 [&>pre]:rounded-lg
+                     [&>a]:text-blue-600 [&>a]:hover:underline"
+              set:html={htmlContent}
+            />
+            <a href={`/`} class="inline-flex items-center pt-4 gap-2 text-neutral-800 dark:text-white font-medium hover:text-blue-600 transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" transform="matrix(-1,1.2246467991473532e-16,-1.2246467991473532e-16,-1,0,0)">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                Volver
+            </a>
+            </article>
+        </div>
+    </main>
+</Layout>

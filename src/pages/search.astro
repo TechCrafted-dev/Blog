@@ -1,0 +1,63 @@
+---
+import Layout   from '@/layouts/Layout.astro';
+import RepoCard from '@/components/RepoCard.astro';
+import { getRepos } from '@/scripts/getRepos';
+
+const repos = await getRepos();
+
+export const prerender = true;
+---
+
+<Layout>
+  <main class="mx-auto w-[60rem]">
+      <div class="flex flex-col pt-20 pr-8 gap-12">
+          <section class="text-neutral-900 dark:text-neutral-100">
+              <h2 class="text-2xl font-bold mb-6">Coincidencias Encontradas</h2>
+              <div id="posts-grid" class="grid md:grid-cols-2 gap-6">
+                  {repos.map(repo => (
+                    <div
+                      data-title={repo.name.toLowerCase()}
+                      data-desc={(repo.description || '').toLowerCase()}>
+                      <RepoCard {...repo} />
+                    </div>
+                  ))}
+              </div>
+          </section>
+      </div>
+  </main>
+
+  <!-- Script que filtra en cuanto se carga la página -->
+  <script is:inline type="module">
+    /** Lee la query `q` y filtra tarjetas por title o description */
+    function filter() {
+      const params = new URLSearchParams(window.location.search);
+      const q      = (params.get('q') || '').trim().toLowerCase();
+      const cards  = document.querySelectorAll('#posts-grid > [data-title]');
+
+      cards.forEach(card => {
+        const match =
+          !q ||
+          card.dataset.title.includes(q) ||
+          card.dataset.desc.includes(q);
+        card.hidden = !match;
+      });
+    }
+
+    /* Filtra al cargar, y cada vez que cambie la url (History API) */
+    window.addEventListener('DOMContentLoaded', filter);
+    window.addEventListener('popstate',       filter);
+
+    /* Opcional: actualizar el filtro en vivo conforme tecleas */
+    const searchInput = document.querySelector('input[name="q"]');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const q = e.target.value;
+        const url = new URL(window.location);
+        if (q) url.searchParams.set('q', q);
+        else   url.searchParams.delete('q');
+        history.replaceState(null, '', url);
+        filter();
+      });
+    }
+  </script>
+</Layout>
