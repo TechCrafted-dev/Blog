@@ -1,6 +1,6 @@
 ---
 import Layout   from '@/layouts/Layout.astro';
-import RepoCard from '@/components/RepoCard.astro';
+import RepoCard from '@/components/maker/RepoCard.astro';
 import { getRepos } from '@/scripts/getRepos';
 
 const repos = await getRepos();
@@ -9,8 +9,8 @@ export const prerender = true;
 ---
 
 <Layout>
-  <main class="mx-auto w-[60rem]">
-      <div class="flex flex-col pt-20 pr-8 gap-12">
+  <div class="mx-auto w-full xl:w-[60rem] px-4 px-0 xl:pt-20 pt-24 xl:pr-8">
+        <div class="flex flex-col xl:gap-12">
           <section class="text-neutral-900 dark:text-neutral-100">
               <h2 class="text-2xl font-bold mb-6">Coincidencias Encontradas</h2>
               <div id="posts-grid" class="grid md:grid-cols-2 gap-6">
@@ -24,7 +24,7 @@ export const prerender = true;
               </div>
           </section>
       </div>
-  </main>
+  </div>
 
   <!-- Script que filtra en cuanto se carga la página -->
   <script is:inline type="module">

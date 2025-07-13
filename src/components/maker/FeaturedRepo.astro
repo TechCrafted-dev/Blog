@@ -10,7 +10,11 @@ interface Props {
 const { name, description, created_at, language, id } = Astro.props;
 ---
 
-<article class="bg-white dark:bg-neutral-800/60 p-6 rounded-lg shadow-sm backdrop-blur-sm border border-neutral-500/10 dark:border-neutral-700/30 hover:shadow-lg transition-shadow duration-200 group">
+<article class="bg-white dark:bg-neutral-800/60 p-6 rounded-lg shadow-sm
+                backdrop-blur-sm border border-neutral-500/10
+                dark:border-neutral-700/30 hover:shadow-lg transition-shadow
+                 duration-200 group">
+
     <div class="mb-4">
         <img
             src="/placeholder.svg"
@@ -19,7 +23,7 @@ const { name, description, created_at, language, id } = Astro.props;
         />
     </div>
     <h3 class="text-2xl font-semibold mb-3">{name}</h3>
-    <p class="text-neutral-700 dark:text-neutral-300">
+    <p class="text-base text-neutral-700 dark:text-neutral-300">
         {description}
     </p>
     <div class="mt-4 flex items-center justify-between">
@@ -42,7 +46,7 @@ const { name, description, created_at, language, id } = Astro.props;
                 {language}
             </span>
         </div>
-        <a href={`/post/${id}`} class="inline-flex items-center gap-2 text-neutral-800 dark:text-white font-medium group-hover:text-blue-600 transition duration-200">
+        <a href={`/post/${id}`} class="text-base inline-flex items-center gap-2 text-neutral-800 dark:text-white font-medium group-hover:text-blue-600 transition duration-200">
             Leer Más
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

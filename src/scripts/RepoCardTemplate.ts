@@ -18,7 +18,7 @@ export function createRepoCard(repo: Repo): string {
             </div>
 
             <h3 class="text-xl font-semibold mb-2 group-hover:text-blue-600">${repo.name}</h3>
-            <p class="text-neutral-600 dark:text-neutral-300">
+            <p class="text-base text-neutral-600 dark:text-neutral-300">
                 ${repo.description}
             </p>
 

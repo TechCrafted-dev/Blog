@@ -1,7 +1,7 @@
 ---
 import Layout        from '@/layouts/Layout.astro';
-import RepoCard       from '@/components/RepoCard.astro';
-import FeaturedRepo   from '@/components/FeaturedRepo.astro';
+import RepoCard       from '@/components/maker/RepoCard.astro';
+import FeaturedRepo   from '@/components/maker/FeaturedRepo.astro';
 
 import { getRepos } from '@/scripts/getRepos';
 
@@ -13,39 +13,37 @@ export const prerender = true;
 ---
 
 <Layout>
-    <main class="mx-auto w-[60rem]">
-        <div class="pt-20 pr-8">
-            <div class="flex flex-col gap-12">
-                <!-- Artículo Principal -->
-                <section class="text-neutral-900 dark:text-neutral-100">
-                    <h2 class="text-2xl font-bold mb-4">Última Publicación</h2>
-                    {latestPost && <FeaturedRepo {...latestPost} />}
-                </section>
+    <div class="mx-auto w-full xl:w-[60rem] px-4 px-0 xl:pt-20 pt-24 xl:pr-8">
+        <div class="flex flex-col xl:gap-12">
+            <!-- Artículo Principal -->
+            <section class="text-neutral-900 dark:text-neutral-100">
+                <h2 class="text-2xl text-2xl font-bold mb-4">Última Publicación</h2>
+                {latestPost && <FeaturedRepo {...latestPost} />}
+            </section>
 
-                <!-- Entradas Anteriores -->
-                <section class="text-neutral-900 dark:text-neutral-100">
-                    <h2 class="text-2xl font-bold mb-6">Entradas Anteriores</h2>
-                    <div id="posts-grid" class="grid grid-cols-2 gap-6">
-                        {remainingPosts
-                            .slice(0, 4)
-                            .map(repo => <RepoCard {...repo} />)}
+            <!-- Entradas Anteriores -->
+            <section class="text-neutral-900 dark:text-neutral-100 xl:pt-0 pt-8">
+                <h2 class="text-2xl font-bold mb-6">Entradas Anteriores</h2>
+                <div id="posts-grid" class="grid xl:grid-cols-2 grid-cols-1 xl:gap-6 gap-12">
+                    {remainingPosts
+                        .slice(0, 4)
+                        .map(repo => <RepoCard {...repo} />)}
+                </div>
+                {remainingPosts.length > 4 && (
+                    <div class="text-base flex justify-center mt-8 ">
+                        <button
+                            id="load-more"
+                            class="px-6 py-2 text-neutral-800 hover:text-blue-500 transition-colors duration-200"
+                            data-current-page="1"
+                            data-total-posts={JSON.stringify(remainingPosts)}
+                        >
+                            Cargar más...
+                        </button>
                     </div>
-                    {remainingPosts.length > 4 && (
-                        <div class="flex justify-center mt-8">
-                            <button
-                                id="load-more"
-                                class="px-6 py-2 text-neutral-800 hover:text-blue-500 transition-colors duration-200"
-                                data-current-page="1"
-                                data-total-posts={JSON.stringify(remainingPosts)}
-                            >
-                                Cargar más...
-                            </button>
-                        </div>
-                    )}
-                </section>
-            </div>
+                )}
+            </section>
         </div>
-    </main>
+    </div>
 </Layout>
 
 <script>

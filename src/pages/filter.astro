@@ -1,6 +1,6 @@
 ---
 import Layout   from '@/layouts/Layout.astro';
-import RepoCard from '@/components/RepoCard.astro';
+import RepoCard from '@/components/maker/RepoCard.astro';
 import { getRepos } from '@/scripts/getRepos';
 
 const repos = await getRepos();
@@ -9,11 +9,11 @@ export const prerender = true;
 ---
 
 <Layout>
-  <main class="mx-auto w-[60rem]">
-      <div class="flex flex-col pt-20 pr-8 gap-12">
+  <div class="xl:mx-auto w-full xl:w-[60rem] pb-8 pt-24">
+        <div class="flex flex-col xl:gap-12">
           <section class="text-neutral-900 dark:text-neutral-100">
-              <h2 class="text-2xl font-bold mb-6">Entradas Filtradas</h2>
-              <div id="posts-grid" class="grid md:grid-cols-2 gap-6">
+              <h2 class="text-2xl font-bold mb-6 pl-6">Entradas Filtradas</h2>
+              <div id="posts-grid" class="grid md:grid-cols-2 gap-6 px-4">
                   {repos.map((repo) => (
                           <div data-lang={repo.language || 'Unknown'}>
                               <RepoCard {...repo} />
@@ -22,7 +22,7 @@ export const prerender = true;
               </div>
           </section>
       </div>
-  </main>
+  </div>
 
   <script is:inline type="module">
     // Esperamos a que el DOM esté listo

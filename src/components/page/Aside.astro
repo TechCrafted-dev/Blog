@@ -15,23 +15,36 @@ languageCount = Object.fromEntries(
 export const prerender = true;
 ---
 
-<aside class="fixed top-16 w-[20rem] h-screen overflow-y-auto pt-10" style="right: calc((100% - 80rem) / 2)">
-    <div class="bg-white dark:bg-neutral-800 p-6 rounded-lg border border-neutral-200 dark:border-neutral-700 shadow-[0_1px_4px_0_rgba(0,0,0,0.03)] m-4">
+<aside class="xl:fixed xl:top-16 xl:flex xl:flex-col xl:gap-0
+              xl:w-[20rem] xl:h-screen xl:pt-10 xl:px-0 px-4
+              pb-8 grid grid-cols-2 gap-4 w-full xl:overflow-y-auto"
+
+       style="right: calc((100% - 80rem) / 2)">
+    <div class="bg-white dark:bg-neutral-800 p-6 rounded-lg border
+              border-neutral-200 dark:border-neutral-700
+              shadow-[0_1px_4px_0_rgba(0,0,0,0.03)] xl:m-4">
+
         <h2 class="text-xl font-semibold mb-4">Sobre el blog</h2>
         <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-0">
           En este blog compartiré los proyectos que he realizado y los que vaya desarrollando.
           El contenido de cada publicación se genera con inteligencia artificial a partir de la información de esos proyectos.
         </p>
     </div>
-    <div class="bg-white dark:bg-neutral-800 p-6 rounded-lg border border-neutral-200 dark:border-neutral-700 shadow-[0_1px_4px_0_rgba(0,0,0,0.03)] m-4">
+    <div class="bg-white dark:bg-neutral-800 p-6 rounded-lg border
+              border-neutral-200 dark:border-neutral-700
+              shadow-[0_1px_4px_0_rgba(0,0,0,0.03)] xl:m-4">
+
         <h2 class="text-xl font-semibold mb-4">Categorias</h2>
-        <ul class="text-sm text-neutral-600 dark:text-neutral-400 mb-0">
+        <ul class="xl:text-sm text-xs text-neutral-600 dark:text-neutral-400 mb-0">
             {Object.entries(languageCount).map(([language, count]) => (
                     <li class="flex items-center justify-between mb-2 border-b border-neutral-100 dark:border-neutral-700">
                         <a href={`/filter?cat=${encodeURIComponent(language)}`}>
                             <span class="hover:text-blue-600 cursor-pointer">{language}</span>
                         </a>
-                        <span class="inline-flex items-center justify-center w-10 h-7 rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 font-semibold">{count}</span>
+                        <span class="inline-flex items-center justify-center w-10 h-7
+                                    rounded-full bg-neutral-100 dark:bg-neutral-700
+                                    text-neutral-700 dark:text-neutral-200
+                                    font-semibold">{count}</span>
                     </li>
             ))}
         </ul>

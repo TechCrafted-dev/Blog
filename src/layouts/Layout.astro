@@ -4,11 +4,11 @@ import '@/styles/global.css';
 import { getRepos } from '@/scripts/getRepos';
 import { getPosts } from '@/scripts/getPosts';
 
-import ThemeToggle from '@/components/ThemeToggle.astro';
+import ThemeToggle from '@/components/extra/ThemeToggle.astro';
 
-import Footer from '@/components/Footer.astro';
-import Header from "@/components/Header.astro";
-import Aside from "@/components/Aside.astro";
+import Footer from '@/components/page/Footer.astro';
+import Header from "@/components/page/Header.astro";
+import Aside from "@/components/page/Aside.astro";
 
 const repos = await getRepos();
 const posts = await getPosts();
@@ -53,15 +53,17 @@ export const prerender = true;
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	</head>
-	<body class="bg-white dark:bg-neutral-800">
+	<body class="bg-white dark:bg-neutral-800 w-full flex flex-col min-h-screen">
 		<Header />
-		<ThemeToggle />
-		<div class="py-6 max-w-7xl mx-auto relative">
-			<main class="min-h-screen pr-[40rem] p-4">
+		<!-- <ThemeToggle /> -->
+
+		<div class="flex-grow xl:py-6 py-4 max-w-7xl mx-auto w-full xl:grid xl:grid-cols-1 flex flex-col xl:grid-cols-[1fr_40rem] gap-8">
+			<main class="p-0">
 				<slot />
 			</main>
-			<Aside {repos} />
+			<Aside {repos} class="w-full xl:w-[40rem] xl:sticky xl:top-32"/>
 		</div>
+
 		<Footer />
 	</body>
 </html>

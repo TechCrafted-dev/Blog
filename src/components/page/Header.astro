@@ -3,16 +3,16 @@ import LogoTechCrafted from '@/assets/logo.webp';
 ---
 
 <header class="fixed top-0 w-full bg-white dark:bg-gray-500 z-10">
-    <nav class="h-16 max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <nav class="xl:h-16 h-14 max-w-7xl px-4 py-3 flex items-center justify-between mx-auto">
         <a href="/">
           <img
             src={LogoTechCrafted.src}
             alt="TechCrafted Logo"
             id="logo"
-            class="h-20"
+            class="xl:h-20 h-18"
           />
         </a>
-      <form action="/search" method="get" class="w-72 ml-auto text-black dark:text-white   ">
+      <form action="/search" method="get" class="xl:w-72 w-50 ml-auto text-black dark:text-white   ">
         <div class="relative">
           <input
             type="text" name="q"
