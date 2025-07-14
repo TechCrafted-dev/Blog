@@ -4,7 +4,7 @@ import '@/styles/global.css';
 import { getRepos } from '@/scripts/getRepos';
 import { getPosts } from '@/scripts/getPosts';
 
-import ThemeToggle from '@/components/extra/ThemeToggle.astro';
+// import ThemeToggle from '@/components/extra/ThemeToggle.astro';
 
 import Footer from '@/components/page/Footer.astro';
 import Header from "@/components/page/Header.astro";
@@ -24,17 +24,17 @@ export const prerender = true;
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- Open Graph (usado por Telegram, Discord, LinkedIn...) -->
-		<meta property="og:title" content="TechCrafted.dev – Tecnología, IA y Desarrollo">
+		<meta property="og:title" content="Blog.TechCrafted.dev – Tecnología, IA y Desarrollo">
 		<meta property="og:description" content="Un espacio dedicado a la tecnología, el desarrollo y grandes ideas que merecen compartirse.">
-		<meta property="og:image" content="https://techcrafted.dev/og-image.jpg">
-		<meta property="og:url" content="https://techcrafted.dev">
+		<meta property="og:image" content="https://blog.techcrafted.dev/og-image.jpg">
+		<meta property="og:url" content="https://blog.techcrafted.dev">
 		<meta property="og:type" content="website">
 
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:title" content="TechCrafted.dev – Tecnología, IA y Desarrollo">
+		<meta name="twitter:title" content="Blog.TechCrafted.dev – Tecnología, IA y Desarrollo">
 		<meta name="twitter:description" content="Un espacio dedicado a la tecnología, el desarrollo y grandes ideas que merecen compartirse.">
-		<meta name="twitter:image" content="https://techcrafted.dev/og-image.jpg">
+		<meta name="twitter:image" content="https://blog.techcrafted.dev/og-image.jpg">
 
 		<title>TechCrafted.dev</title>
 
@@ -52,7 +52,7 @@ export const prerender = true;
 		<link rel="manifest" href="/manifest.webmanifest">
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-		<script defer src="http://10.0.10.10:30060/script.js" data-website-id="e6a93260-5411-44fc-b3a6-c6644f10b12d"></script>
+		<script defer src="https://stats.techcrafted.dev/script.js" data-website-id="e6a93260-5411-44fc-b3a6-c6644f10b12d"></script>
 	</head>
 	<body class="bg-white dark:bg-neutral-800 w-full flex flex-col min-h-screen">
 		<Header />

@@ -4,7 +4,7 @@ pipeline {
         NAME = 'blog-techcrafted'
         PORT     = '5432'
         TAG      = "${NAME}:latest"
-        VCS_REF   = "${GIT_COMMIT}"   // cache-buster opcional
+        VCS_REF   = "${GIT_COMMIT}"
     }
 
     stages {
@@ -19,13 +19,13 @@ pipeline {
         }
         stage('Redeploy') {
             steps {
-                sh '''
+                sh """
                   docker stop ${NAME} || true
                   docker rm   ${NAME} || true
                   docker run -d --name ${NAME} \
                     --restart unless-stopped \
                     -p ${PORT}:80 ${TAG}
-                '''
+                """
             }
         }
     }

@@ -1,6 +1,6 @@
 {
-  "name": "TechCrafted.dev",
-  "short_name": "TechCrafted.dev",
+  "name": "Blog.TechCrafted.dev",
+  "short_name": "blog.TechCrafted.dev",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
