@@ -43,7 +43,8 @@ import LogoTechCrafted from '@/assets/logo.webp';
   const mq = window.matchMedia('(prefers-color-scheme: dark)');
 
   /** Lee el último valor o “system” por defecto */
-  let theme = localStorage.getItem(STORAGE_KEY) || 'system';
+  // let theme = localStorage.getItem(STORAGE_KEY) || 'system';
+  let theme = 'light'; // Cambiado a 'light' por defecto
 
   /** Aplica la elección al <html> y al icono */
   function applyTheme({value}: { value: any }) {
