@@ -1,23 +1,28 @@
 pipeline {
     agent any
     environment {
-        APP_NAME = 'blog-techcrafted'
+        NAME = 'blog-techcrafted'
         PORT     = '5432'
-        TAG      = "${APP_NAME}:latest"
+        TAG      = "${NAME}:latest"
+        VCS_REF   = "${GIT_COMMIT}"   // cache-buster opcional
     }
 
     stages {
         stage('Build image') {
             steps {
-                sh 'docker build --pull -t ${TAG} .'
+                sh """
+                    docker build --pull \
+                        --build-arg VCS_REF=${VCS_REF} \
+                        -t ${TAG} .
+                """
             }
         }
         stage('Redeploy') {
             steps {
                 sh '''
-                  docker stop ${APP_NAME} || true
-                  docker rm   ${APP_NAME} || true
-                  docker run -d --name ${APP_NAME} \
+                  docker stop ${NAME} || true
+                  docker rm   ${NAME} || true
+                  docker run -d --name ${NAME} \
                     --restart unless-stopped \
                     -p ${PORT}:80 ${TAG}
                 '''
