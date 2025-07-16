@@ -24,7 +24,7 @@ export function createRepoCard(repo: Repo): string {
 
             <div class="mt-auto flex justify-between items-center pt-8">
                 <span class="flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
@@ -35,7 +35,7 @@ export function createRepoCard(repo: Repo): string {
                 </span>
 
                 <span class="inline-flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 6l-6 6 6 6" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l4-14" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 18l6-6-6-6" />
