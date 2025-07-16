@@ -20,7 +20,6 @@ const today = new Date();
 				<a href="https://github.com/TRuHa83" target="_blank" aria-label="GitHub"><i class="fab fa-github fa-lg hover:text-blue-500"></i></a>
 				<a href="https://www.linkedin.com/in/sergio-trujillo-de-la-nuez-32a4a727/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin fa-lg hover:text-blue-500"></i></a>
 			</div>
-
 		</div>
 
 		<! -- Information Section -->
@@ -28,23 +27,25 @@ const today = new Date();
 			<h3 class="font-bold">Información</h3>
 			<ul class="text-sm text-neutral-600 dark:text-neutral-400">
 				<li class="pt-2"><a href="https://techcrafted.dev" class="hover:text-blue-500">techcrafted.dev</a></li>
-				<li class="pt-2"><a href="https://portafolio.techcrafted.dev" class="hover:text-blue-500">Portafolio</a></li>
-				<li class="pt-2"><a href="https://news.techcrafted.dev" class="hover:text-blue-500">Noticias</a></li>
+				<li class="pt-2"><a href="https://techcrafted.dev/portafolio" class="hover:text-blue-500">Portafolio</a></li>
+				<li class="pt-2"><a href="https://techcrafted.dev/news" class="hover:text-blue-500">Noticias</a></li>
 			</ul>
 		</div>
 
 		<!-- Contact Section -->
-		<div class="xl:text-left text-center mx-auto xl:mx-0 max-w-xs xl:w-70">
+		<div class="xl:text-left text-center mx-auto xl:mx-0 max-w-xs xl:w-70 relative z-10">
 			<h3 class="font-bold pb-2">Suscríbete</h3>
 			<input type="email" placeholder="Tu correo electrónico"
-				class="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded-md text-sm text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-				aria-label="Suscríbete a nuestro boletín" />
-			<button class="mt-2 w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
+				   class="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded-md text-sm text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+				   aria-label="Suscríbete a nuestro boletín"/>
+			<button id="contact-submit-btn"
+				class="mt-2 w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
 				Enviar
 			</button>
 		</div>
 	</div>
 
+	<!-- Signature -->
 	<hr class="flex m-auto w-3/4 border-neutral-200 dark:border-neutral-700" />
 	<div class="max-w-7xl mx-auto flex items-center justify-between border-neutral-200 dark:border-neutral-700">
 		<div class="w-full text-center xl:text-sm text-xs text-neutral-500 dark:text-neutral-400 py-6">
@@ -52,3 +53,17 @@ const today = new Date();
 		</div>
 	</div>
 </footer>
+
+<script client:load>
+  // Escuchar el evento DOMContentLoaded para inicializar
+  document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById("contact-submit-btn");
+
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      
+      // Muestra un popup alertando al usuario
+      alert("La subscripción al boletín no está disponible en este momento. Por favor, inténtalo más tarde.");
+    });
+  });
+</script>
