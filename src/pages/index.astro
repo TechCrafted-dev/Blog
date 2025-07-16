@@ -3,7 +3,7 @@ import Layout        from '@/layouts/Layout.astro';
 import RepoCard       from '@/components/maker/RepoCard.astro';
 import FeaturedRepo   from '@/components/maker/FeaturedRepo.astro';
 
-import { getRepos } from '@/scripts/getRepos';
+import { getRepos } from '@/components/scripts/getRepos';
 
 const repos      = await getRepos();
 const latestPost = repos.at(-1);
@@ -47,7 +47,7 @@ export const prerender = true;
 </Layout>
 
 <script>
-    import { createRepoCard } from '@/scripts/RepoCardTemplate';
+    import { createRepoCard } from '@/components/scripts/RepoCardTemplate';
 
     const loadMoreBtn = document.getElementById('load-more');
     const postsGrid = document.getElementById('posts-grid');
