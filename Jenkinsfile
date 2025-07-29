@@ -71,7 +71,6 @@ pipeline {
 
                 docker run -d --name ${PROD_NAME} \
                     --restart unless-stopped \
-                    -v ${FOLDER}:/app/data \
                     -p ${PROD_PORT}:3000 \
                     ${TAG_LATEST}
                 '''
