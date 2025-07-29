@@ -71,7 +71,7 @@ pipeline {
 
                 docker run -d --name ${PROD_NAME} \
                     --restart unless-stopped \
-                    -p ${PROD_PORT}:3000 \
+                    -p ${PROD_PORT}:80 \
                     ${TAG_LATEST}
                 '''
             }
