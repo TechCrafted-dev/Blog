@@ -1,9 +1,9 @@
 ---
 import Layout   from '@/layouts/Layout.astro';
 import RepoCard from '@/components/maker/RepoCard.astro';
-import { getRepos } from '@/components/scripts/getRepos';
+import { getData } from '@/components/scripts/getData';
 
-const repos = await getRepos();
+const repos = await getData('repos');
 
 export const prerender = true;
 ---
