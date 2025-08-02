@@ -17,6 +17,9 @@ RUN npm install
 # Copy the rest of the project files
 COPY . .
 
+ARG API_BASE
+ENV API_BASE=$API_BASE
+
 # Build the Astro project (outputs to /app/dist)
 RUN npx astro build
 

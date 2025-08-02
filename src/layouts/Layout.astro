@@ -1,17 +1,13 @@
 ---
 import '@/styles/global.css';
 
-import { getRepos } from '@/components/scripts/getRepos';
-import { getPosts } from '@/components/scripts/getPosts';
-
-// import ThemeToggle from '@/components/extra/ThemeToggle.astro';
+import { getData } from '@/components/scripts/getData';
 
 import Footer from '@/components/page/Footer.astro';
 import Header from "@/components/page/Header.astro";
 import Aside from "@/components/page/Aside.astro";
 
-const repos = await getRepos();
-const posts = await getPosts();
+const repos = await getData('repos');
 
 export const prerender = true;
 ---
@@ -60,7 +56,7 @@ export const prerender = true;
 
 		<div class="flex-grow xl:py-6 py-4 max-w-7xl mx-auto w-full xl:grid xl:grid-cols-1 flex flex-col xl:grid-cols-[1fr_40rem] gap-8">
 			<main class="p-0">
-				<slot />
+				<slot {repos} />
 			</main>
 			<Aside {repos} class="w-full xl:w-[40rem] xl:sticky xl:top-32"/>
 		</div>

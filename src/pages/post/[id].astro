@@ -1,11 +1,11 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 
-import { getPosts } from '@/components/scripts/getPosts';
+import { getData } from '@/components/scripts/getData';
 import { marked } from 'marked';
 
 export async function getStaticPaths() {
-  const posts = await getPosts();
+  const posts = await getData('posts');
   return posts.map((post) => ({
     params: { id: post.id.toString() },
     props:  { post },

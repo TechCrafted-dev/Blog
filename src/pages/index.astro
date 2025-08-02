@@ -3,9 +3,9 @@ import Layout        from '@/layouts/Layout.astro';
 import RepoCard       from '@/components/maker/RepoCard.astro';
 import FeaturedRepo   from '@/components/maker/FeaturedRepo.astro';
 
-import { getRepos } from '@/components/scripts/getRepos';
+import { getData } from '@/components/scripts/getData';
 
-const repos      = await getRepos();
+const repos      = await getData('repos');
 const latestPost = repos.at(-1);
 const remainingPosts  = repos.slice(0, -1).reverse();
 

@@ -15,6 +15,7 @@ pipeline {
         // --- Container
         PROD_NAME  = 'techcrafted-blog'
         PROD_PORT  = '5432'
+        API_BASE   = credentials('API_BASE')
 
         // --- Telegram ---
         TG_TOKEN   = credentials('TELEGRAM_TOKEN')
@@ -39,12 +40,12 @@ pipeline {
                     """.stripIndent().trim()
 
                     // Llamada al bot
-                    sh """
+                    sh '''
                         curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
                              --data-urlencode "chat_id=${TG_CHAT}" \
                              --data-urlencode "text=${msg}" \
                              -d parse_mode=HTML
-                    """
+                    '''
                 }
             }
         }
@@ -52,12 +53,13 @@ pipeline {
         /* ---------- COMPILAR IMAGEN ---------- */
         stage('Build image') {
             steps {
-                sh """
+                sh '''
                 docker build --pull --no-cache \
                     --label project=${PROD_NAME} \
                     --build-arg VCS_REF=${GIT_COMMIT} \
+                    --build-arg API_BASE=${API_BASE} \
                     -t ${TAG_UNIQ} -t ${TAG_LATEST} .
-                """
+                '''
             }
         }
 
@@ -113,12 +115,12 @@ pipeline {
                     Todo salió bien.
                 """.stripIndent().trim()
 
-                sh """
+                sh '''
                     curl -s "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \\
                          --data-urlencode "chat_id=${TG_CHAT}" \\
                          --data-urlencode "text=${msg}" \\
                          -d parse_mode=HTML
-                """
+                '''
             }
         }
 
@@ -129,12 +131,12 @@ pipeline {
                     Revisa Jenkins para más detalles.
                 """.stripIndent().trim()
 
-                sh """
+                sh '''
                     curl -s "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \\
                          --data-urlencode "chat_id=${TG_CHAT}" \\
                          --data-urlencode "text=${msg}" \\
                          -d parse_mode=HTML
-                """
+                '''
             }
         }
     }
