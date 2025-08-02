@@ -31,13 +31,13 @@ pipeline {
                     def shortCommit = env.GIT_COMMIT.take(8)
 
                     // Mensaje HTML multilínea
-                    def msg = """
+                    def msg = '''
                         <b>📦 ${env.REPO_NAME}</b>
                         <b>Branch:</b> ${env.BRANCH_NAME}
                         <b>Commit:</b> <code>${shortCommit}</code>
 
                         🏗️ Build iniciado…
-                    """.stripIndent().trim()
+                    '''.stripIndent().trim()
 
                     // Llamada al bot
                     sh '''
@@ -110,10 +110,10 @@ pipeline {
     post {
         success {
             script {
-                def msg = """
+                def msg = '''
                     <b>✅ Despliegue completado</b>
                     Todo salió bien.
-                """.stripIndent().trim()
+                '''.stripIndent().trim()
 
                 sh '''
                     curl -s "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \\
@@ -126,10 +126,10 @@ pipeline {
 
         failure {
             script {
-                def msg = """
+                def msg = '''
                     <b>❌ Build fallido</b>
                     Revisa Jenkins para más detalles.
-                """.stripIndent().trim()
+                '''.stripIndent().trim()
 
                 sh '''
                     curl -s "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \\
