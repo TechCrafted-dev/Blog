@@ -53,13 +53,13 @@ pipeline {
         /* ---------- COMPILAR IMAGEN ---------- */
         stage('Build image') {
             steps {
-                sh """
+                sh '''
                 docker build --pull --no-cache \
                     --label project=${PROD_NAME} \
                     --build-arg VCS_REF=${GIT_COMMIT} \
                     --build-arg API_BASE=${API_BASE} \
                     -t ${TAG_UNIQ} -t ${TAG_LATEST} .
-                """
+                '''
             }
         }
 
@@ -67,7 +67,7 @@ pipeline {
         stage('Deploy to PROD') {
             when { branch 'main' }
             steps {
-                sh """
+                sh '''
                 docker stop ${PROD_NAME} || true
                 docker rm   ${PROD_NAME} || true
 
@@ -75,7 +75,7 @@ pipeline {
                     --restart unless-stopped \
                     -p ${PROD_PORT}:80 \
                     ${TAG_LATEST}
-                """
+                '''
             }
         }
 
@@ -84,7 +84,7 @@ pipeline {
             when { branch 'main' }
             steps {
                 // 1) Mantener como máximo las 5 imágenes más recientes del proyecto
-                sh """
+                sh '''
                 keep=5
                 ids=$(docker images ${REPO_NAME} --format "{{.CreatedAt}} {{.ID}}" | \
                     sort -r | tail -n +$((keep+1)) | awk '{print $2}')
@@ -92,14 +92,14 @@ pipeline {
                 if [ -n "$ids" ]; then
                     docker rmi $ids || true
                 fi
-                """
+                '''
 
                 // 2)  Quitar capas huérfanas (>30 días) de ESTE proyecto
-                sh """
+                sh '''
                 docker image prune -a -f \
                     --filter "label=project=${PROD_NAME}" \
                     --filter "until=720h"
-                """
+                '''
             }
         }
     }
