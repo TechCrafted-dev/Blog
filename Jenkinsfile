@@ -31,21 +31,21 @@ pipeline {
                     def shortCommit = env.GIT_COMMIT.take(8)
 
                     // Mensaje HTML multilínea
-                    def msg = '''
+                    def msg = """
                         <b>📦 ${env.REPO_NAME}</b>
                         <b>Branch:</b> ${env.BRANCH_NAME}
                         <b>Commit:</b> <code>${shortCommit}</code>
 
                         🏗️ Build iniciado…
-                    '''.stripIndent().trim()
+                    """.stripIndent().trim()
 
                     // Llamada al bot
-                    sh '''
+                    sh """
                         curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
                              --data-urlencode "chat_id=${TG_CHAT}" \
                              --data-urlencode "text=${msg}" \
                              -d parse_mode=HTML
-                    '''
+                    """
                 }
             }
         }
@@ -53,13 +53,13 @@ pipeline {
         /* ---------- COMPILAR IMAGEN ---------- */
         stage('Build image') {
             steps {
-                sh '''
+                sh """
                 docker build --pull --no-cache \
                     --label project=${PROD_NAME} \
                     --build-arg VCS_REF=${GIT_COMMIT} \
                     --build-arg API_BASE=${API_BASE} \
                     -t ${TAG_UNIQ} -t ${TAG_LATEST} .
-                '''
+                """
             }
         }
 
@@ -67,7 +67,7 @@ pipeline {
         stage('Deploy to PROD') {
             when { branch 'main' }
             steps {
-                sh '''
+                sh """
                 docker stop ${PROD_NAME} || true
                 docker rm   ${PROD_NAME} || true
 
@@ -75,7 +75,7 @@ pipeline {
                     --restart unless-stopped \
                     -p ${PROD_PORT}:80 \
                     ${TAG_LATEST}
-                '''
+                """
             }
         }
 
@@ -84,7 +84,7 @@ pipeline {
             when { branch 'main' }
             steps {
                 // 1) Mantener como máximo las 5 imágenes más recientes del proyecto
-                sh '''
+                sh """
                 keep=5
                 ids=$(docker images ${REPO_NAME} --format "{{.CreatedAt}} {{.ID}}" | \
                     sort -r | tail -n +$((keep+1)) | awk '{print $2}')
@@ -92,14 +92,14 @@ pipeline {
                 if [ -n "$ids" ]; then
                     docker rmi $ids || true
                 fi
-                '''
+                """
 
                 // 2)  Quitar capas huérfanas (>30 días) de ESTE proyecto
-                sh '''
+                sh """
                 docker image prune -a -f \
                     --filter "label=project=${PROD_NAME}" \
                     --filter "until=720h"
-                '''
+                """
             }
         }
     }
@@ -110,33 +110,33 @@ pipeline {
     post {
         success {
             script {
-                def msg = '''
+                def msg = """
                     <b>✅ Despliegue completado</b>
                     Todo salió bien.
-                '''.stripIndent().trim()
+                """.stripIndent().trim()
 
-                sh '''
+                sh """
                     curl -s "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \\
                          --data-urlencode "chat_id=${TG_CHAT}" \\
                          --data-urlencode "text=${msg}" \\
                          -d parse_mode=HTML
-                '''
+                """
             }
         }
 
         failure {
             script {
-                def msg = '''
+                def msg = """
                     <b>❌ Build fallido</b>
                     Revisa Jenkins para más detalles.
-                '''.stripIndent().trim()
+                """.stripIndent().trim()
 
-                sh '''
+                sh """
                     curl -s "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \\
                          --data-urlencode "chat_id=${TG_CHAT}" \\
                          --data-urlencode "text=${msg}" \\
                          -d parse_mode=HTML
-                '''
+                """
             }
         }
     }
