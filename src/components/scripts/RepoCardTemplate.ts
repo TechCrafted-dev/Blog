@@ -17,7 +17,7 @@ export function createRepoCard(repo: Repo): string {
                 <img src="/pages/${repo.id}.webp"
                      onerror="this.onerror=null;this.src='/placeholder.svg';"
                      alt="Imagen de ${repo.name}"
-                     class="w-full h-40 object-cover rounded-md"/>
+                     class="w-full h-full object-cover rounded-md"/>
             </div>
 
             <h3 class="text-xl font-semibold mb-2 group-hover:text-blue-600">${repo.name}</h3>

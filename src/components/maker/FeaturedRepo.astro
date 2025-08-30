@@ -20,7 +20,7 @@ const { name, description, updated_at, language, id } = Astro.props;
             src={`/pages/${id}.webp`}
             onError={(e) => { e.currentTarget.src = '/placeholder.svg'; }}
             alt={`Imagen del artículo destacado: ${name}`}
-            class="w-full h-90 object-cover rounded-md"
+            class="w-full h-full object-cover rounded-md"
         />
     </div>
     <h3 class="text-2xl font-semibold mb-3">{name}</h3>
