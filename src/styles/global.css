@@ -22,3 +22,7 @@ header {
 footer {
   margin-top: auto;
 }
+
+@view-transition {
+    navigation: auto;
+}
